@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - SCRUM Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}" />
+</head>
+<body>
+    <header>
+        <h1>Task Board - SCRUM</h1>
+        <h1>LOGIN</h1>
+        <nav>
+            <a href="#">Home</a> 
+            <a href="#">Tasks</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+
+    <div class="login-container">
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Enter Username" required />
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter Password" required />
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2025. All rights reserved.
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

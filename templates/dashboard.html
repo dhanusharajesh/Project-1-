@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - SCRUM Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+</head>
+<body>
+    <header>
+        <h1 id="companyName" class="company-title">Company name</h1>
+        <h1>Dashboard - SCRUM</h1>
+        <nav>
+            <a href="{{ url_for('reports_page') }}">Reports </a> |
+            {% if role == 'admin' %}
+              <a href="{{ url_for('archived_tasks_page') }}">Archives</a> |
+            {% endif %}
+            <a href="{{ url_for('logout') }}"> Logout</a>
+        </nav>
+    </header>
+    <main class="container">
+        {% if session['role'] == 'superadmin' %}
+        <div id="editCompanyDiv" style="margin: 1em;">
+            <input type="text" id="companyInput" placeholder="Enter company name">
+            <button onclick="updateCompanyName()">Update</button>
+        </div>
+        {% endif %}
+
+        <h2>Welcome, {{ username }}!</h2>
+        <select id="statusFilter">
+            <option value="all">All Statuses</option>
+            <option value="To Do">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+        </select>
+        
+        <select id="priorityFilter">
+            <option value="all">All Priorities</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        {% if role == 'admin' %}
+          <button id="addTaskBtn" class="btn btn-primary">+Add Task</button>
+        {% endif %}
+
+        <div id="taskList" class="task-cards-container"></div>
+        
+        <div id="taskModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h3 id="modalTitle">Add Task</h3>
+                <form id="taskForm">
+                    <input type="hidden" id="taskId" />
+                    <div><label>Title:</label>
+                    <input type="text" id="title" required /></div><br>
+                    <div><label>Description:</label>
+                    <textarea id="descriptions" required></textarea></div><br>
+                    <div><label>Status:</label>
+                    <select id="status">
+                        <option>To Do</option>
+                        <option>In Progress</option>
+                        <option>Done</option>
+                    </select>
+                    <label>Priority:</label>
+                    <select id="priority">
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                    </select></div><br>
+                    <div><label>Due Date:</label>
+                    <input type="date" id="due_date" name="due_date" min=""></div><br>
+                    <div><label for="assigned_to">Assign To:</label>
+                    <select id="assigned_to" name="assigned_to">
+                    </select></div><br>
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <section class="projects-section">
+            <h3>All Projects</h3>
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-card">
+                    <h4>{{ project.project_name }}</h4>
+                    <p>{{ project.description }}</p>
+                    <small>Created: {{ project.created_at }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025. All rights reserved.
+    </footer>
+
+    <script>
+      const userRole = "{{ role | lower }}";
+    </script>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+
+</html>

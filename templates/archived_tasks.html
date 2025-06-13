@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives</title>
+    <link rel="stylesheet" href="/static/css/archived.css" />
+</head>
+<body>
+    <header>
+        <h1 id="companyName" class="company-title">Company name</h1>
+        <h1>Archived Tasks</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a> |
+            <a href="{{ url_for('logout') }}"> Logout</a>
+        </nav>
+    </header>
+    
+    <div id="archived-task-container"></div>
+
+    <footer>
+        &copy; 2025. All rights reserved.
+    </footer>
+    
+    <script>
+        const userRole = "{{ session['role'] }}";
+    </script>
+    <script src="/static/js/archived.js"></script>
+</body>
+</html>
